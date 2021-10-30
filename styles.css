@@ -1,0 +1,13 @@
+.operators-numbers{
+  width: 50%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr; 
+}
+
+
+
+body,html{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}

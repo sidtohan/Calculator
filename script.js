@@ -82,7 +82,7 @@ function linkButtonsOperators() {
       button.addEventListener('click', (e) => {
         equalCondition = false;
         lastOp = e.target.textContent;
-        if(currVal === ''){
+        if(currVal === '' && ans !== null){
           inputField.textContent = `${ans} ${e.target.textContent}`;
           return;
         }

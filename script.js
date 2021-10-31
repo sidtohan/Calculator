@@ -60,8 +60,8 @@ function linkButtonsDigits() {
     let tempList = [...button.classList]
     if (tempList.indexOf('digit') != -1) {
       button.addEventListener('click', (e) => {
-        outputField.textContent += e.target.textContent;
         currVal += e.target.textContent;
+        outputField.textContent = currVal;
       })
     }
   }
@@ -74,15 +74,15 @@ function linkButtonsOperators() {
     let tempList = [...button.classList]
     if (tempList.indexOf('operator') != -1) {
       button.addEventListener('click', (e) => {
-        inputField.textContent = `${currVal} ${e.target.textContent} `;
         lastOp = e.target.textContent;
-        outputField.textContent = '';
-        if (ans === null) {
-          ans = Number(currVal);
-          currVal = '';
-        } else {
-          operate(Number(ans), Number(currVal), e.target.textContent);
+        if(currVal === ''){
+          inputField.textContent = `${ans} ${e.target.textContent}`;
+          return;
         }
+        ans = Number(currVal);
+        currVal = '';
+        inputField.textContent = `${ans} ${e.target.textContent}`;
+        outputField.textContent = '';
       })
     }
   }
@@ -91,7 +91,7 @@ function linkButtonsOperators() {
 function linkEqualButton() {
   const equalButton = document.querySelector('.equal');
   equalButton.addEventListener('click', e => {
-    if (ans === null) return;
+    if (ans === null || currVal === '') return;
     inputField.textContent = `${ans} ${lastOp} ${currVal}`;
     operate(Number(ans), Number(currVal), lastOp);
     currVal = ans;

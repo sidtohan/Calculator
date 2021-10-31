@@ -9,6 +9,7 @@ const opList = '+-*/';
 let currVal = '';
 let ans = null;
 let lastOp = null;
+let equalCondition = '';
 
 // FUNCTIONS
 // generates the required buttons
@@ -60,6 +61,11 @@ function linkButtonsDigits() {
     let tempList = [...button.classList]
     if (tempList.indexOf('digit') != -1) {
       button.addEventListener('click', (e) => {
+        if(equalCondition){
+          currVal = '';
+          inputField.textContent = '\n';
+          equalCondition = false;
+        }
         currVal += e.target.textContent;
         outputField.textContent = currVal;
       })
@@ -97,6 +103,7 @@ function linkEqualButton() {
     currVal = ans;
     ans = null;
     lastOp = null;
+    equalCondition = true;
   })
 }
 

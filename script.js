@@ -9,7 +9,7 @@ const opList = '+-*/';
 let currVal = '';
 let ans = null;
 let lastOp = null;
-let equalCondition = '';
+let equalCondition = false;
 
 // FUNCTIONS
 // generates the required buttons
@@ -80,6 +80,7 @@ function linkButtonsOperators() {
     let tempList = [...button.classList]
     if (tempList.indexOf('operator') != -1) {
       button.addEventListener('click', (e) => {
+        equalCondition = false;
         lastOp = e.target.textContent;
         if(currVal === ''){
           inputField.textContent = `${ans} ${e.target.textContent}`;

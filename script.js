@@ -80,9 +80,11 @@ function linkButtonsOperators() {
     let tempList = [...button.classList]
     if (tempList.indexOf('operator') != -1) {
       button.addEventListener('click', (e) => {
+        if(currVal === '' && ans === null) 
+          return;
         equalCondition = false;
         lastOp = e.target.textContent;
-        if(currVal === '' && ans !== null){
+        if(currVal === ''){
           inputField.textContent = `${ans} ${e.target.textContent}`;
           return;
         }
@@ -90,6 +92,7 @@ function linkButtonsOperators() {
         currVal = '';
         inputField.textContent = `${ans} ${e.target.textContent}`;
         outputField.textContent = `${ans}`;
+        
       })
     }
   }
@@ -125,6 +128,10 @@ function operate(a, b, op) {
       break;
     default:
       ans = a / b;
+  }
+  if(ans === Infinity){
+    alert("Zero Division Error");
+    return;
   }
   updateDisplayOutput(ans);
 }

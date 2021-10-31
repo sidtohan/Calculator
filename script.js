@@ -6,10 +6,9 @@ const outputField = document.querySelector('.display > .output');
 const opList = '+-*/';
 
 // GLOBAL VARIABLES
-let currentOperator;
-let multiplier = 0;
-let currVal = 0;
-let lastVal = 0;
+let currVal = '';
+let ans = null;
+let lastOp = null;
 
 // FUNCTIONS
 // generates the required buttons
@@ -61,8 +60,8 @@ function linkButtonsDigits() {
     let tempList = [...button.classList]
     if (tempList.indexOf('digit') != -1) {
       button.addEventListener('click', (e) => {
-        currVal += parseInt(e.target.textContent) * 10 ** (multiplier++);
-        inputField.textContent = currVal;
+        outputField.textContent += e.target.textContent;
+        currVal += e.target.textContent;
       })
     }
   }
@@ -75,11 +74,15 @@ function linkButtonsOperators() {
     let tempList = [...button.classList]
     if (tempList.indexOf('operator') != -1) {
       button.addEventListener('click', (e) => {
-        inputField.textContent = `${currVal} ${e.target.textContent}`;
-        lastVal = currVal;
-        currVal = 0;
-        multiplier = 0;
-        currentOperator = e.target.textContent;
+        inputField.textContent = `${currVal} ${e.target.textContent} `;
+        lastOp = e.target.textContent;
+        outputField.textContent = '';
+        if (ans === null) {
+          ans = Number(currVal);
+          currVal = '';
+        } else {
+          operate(Number(ans), Number(currVal), e.target.textContent);
+        }
       })
     }
   }
@@ -88,7 +91,12 @@ function linkButtonsOperators() {
 function linkEqualButton() {
   const equalButton = document.querySelector('.equal');
   equalButton.addEventListener('click', e => {
-    operate(lastVal, currVal, currentOperator);
+    if (ans === null) return;
+    inputField.textContent = `${ans} ${lastOp} ${currVal}`;
+    operate(Number(ans), Number(currVal), lastOp);
+    currVal = ans;
+    ans = null;
+    lastOp = null;
   })
 }
 
@@ -99,23 +107,19 @@ function updateDisplayOutput(num) {
 function operate(a, b, op) {
   switch (op) {
     case '+':
-      updateDisplayOutput(a + b);
-      currVal = a + b;
+      ans = a + b;
       break;
     case '-':
-      updateDisplayOutput(a - b);
-      currVal = a - b;
+      ans = a - b;
       break;
     case '*':
-      updateDisplayOutput(a * b);
-      currVal = a * b;
+      ans = a * b;
       break;
     default:
-      updateDisplayOutput(a / b);
-      currVal = a / b;
+      ans = a / b;
   }
+  updateDisplayOutput(ans);
 }
 
 // INITIALIZERS
 window.addEventListener('DOMContentLoaded', generateButtonsOperators);
-window.addEventListener('DOMContentLoaded', updateDisplayOutput(0));

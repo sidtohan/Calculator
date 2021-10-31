@@ -88,7 +88,7 @@ function linkButtonsOperators() {
         ans = Number(currVal);
         currVal = '';
         inputField.textContent = `${ans} ${e.target.textContent}`;
-        outputField.textContent = '';
+        outputField.textContent = `${ans}`;
       })
     }
   }

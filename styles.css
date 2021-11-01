@@ -13,6 +13,7 @@
 }
 
 .input, .output{
+  text-overflow: ellipsis;
   color: #fff;
   height: 50%;
   font-size: 4vh;
@@ -21,7 +22,7 @@
 .display{
   display: flex;
   box-sizing: border-box;
-  width: 100%;
+  width: inherit;
   padding: 1vh;
   height: 10vh;
   flex-direction: column;
@@ -89,6 +90,16 @@
   margin: 0;
 }
 
+.left-chevron{
+  height: auto;
+  width: 4vh;
+}
+
+.right-chevron{
+  height: auto;
+  width: 4vh;
+}
+
 .about{
   transition: 0.1s ease-in;
   box-sizing: border-box;
@@ -134,15 +145,8 @@
 .links-copyright.slide-in{
   transform: none;
 }
-.left-chevron{
-  height: auto;
-  width: 3.5vh;
-}
 
-.right-chevron{
-  height: auto;
-  width: 3.5vh;
-}
+
 
 .show-about{
   background-color: transparent;

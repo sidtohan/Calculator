@@ -20,7 +20,6 @@ let equalCondition = false;
 let ifDecimal = false;
 let divShowing = false;
 
-
 // FUNCTIONS
 // generates the required buttons
 function generateButtonsOperators() {
@@ -30,9 +29,13 @@ function generateButtonsOperators() {
       let newButton = document.createElement('button');
       if (j === 3) {
         newButton.classList.add('operator');
+        newButton.setAttribute('type',"button");
+        newButton.classList.add(opList[Math.floor(k / 3) - 1]);
         newButton.textContent = opList[Math.floor(k / 3) - 1];
       } else {
+        newButton.setAttribute('type',"button");
         newButton.classList.add('digit');
+        newButton.classList.add(k);
         newButton.textContent = (k++);
       }
       opButtons.appendChild(newButton);
@@ -45,7 +48,8 @@ function generateButtonsOperators() {
 
   let anotherButton = document.createElement('button');
   anotherButton.textContent = 0;
-  anotherButton.classList.add('digit')
+  anotherButton.classList.add('digit');
+  anotherButton.classList.add('0');
   opButtons.appendChild(anotherButton);
 
   let equalButton = document.createElement('button');
@@ -71,17 +75,24 @@ function linkButtonsDigits() {
     let button = buttonList[i];
     let tempList = [...button.classList]
     if (tempList.indexOf('digit') != -1) {
-      button.addEventListener('click', (e) => {
-        if (equalCondition) {
-          currVal = '';
-          inputField.textContent = '\n';
-          equalCondition = false;
-        }
-        currVal += e.target.textContent;
-        outputField.textContent = currVal;
-      })
+      button.addEventListener('click', doDigit)
     }
   }
+}
+
+function doDigit(e, key) {
+  let digit = (e !== null ? e.target.textContent : key);
+  if (e === null) {
+    const digitKey = document.getElementsByClassName(key)[0];
+    digitKey.classList.toggle('clicked');
+  }
+  if (equalCondition) {
+    currVal = '';
+    inputField.textContent = '';
+    equalCondition = false;
+  }
+  currVal += digit;
+  outputField.textContent = currVal;
 }
 
 function linkButtonsOperators() {
@@ -90,47 +101,64 @@ function linkButtonsOperators() {
     let button = buttonList[i];
     let tempList = [...button.classList]
     if (tempList.indexOf('operator') != -1) {
-      button.addEventListener('click', (e) => {
-        if (currVal === '' && ans === null)
-          return;
-
-        equalCondition = false;
-        if (currVal === '') {
-          inputField.textContent = `${ans} ${e.target.textContent}`;
-          lastOp = e.target.textContent;
-          return;
-        }
-
-        if (lastOp !== null) {
-          operate(Number(ans), Number(currVal), lastOp);
-          lastOp = e.target.textContent;
-          inputField.textContent = `${ans} ${lastOp}`;
-          outputField.textContent = '';
-          currVal = '';
-          return;
-        }
-
-        lastOp = e.target.textContent;
-        ans = Number(currVal);
-        currVal = '';
-        inputField.textContent = `${ans} ${e.target.textContent}`;
-        outputField.textContent = `${ans}`;
-      })
+      button.addEventListener('click', doOperator)
     }
   }
 }
 
+function doOperator(e, operatorPassed) {
+  console.log(e);
+  console.log(operatorPassed);
+  if (currVal === '' && ans === null)
+    return;
+
+  equalCondition = false;
+  if (currVal === '') {
+    inputField.textContent = `${ans} ${e.target.textContent}`;
+    lastOp = e.target.textContent;
+    return;
+  }
+  let operator;
+  if (e === null) {
+    operator = operatorPassed;
+    const digitKey = document.getElementsByClassName(operatorPassed)[0];
+    digitKey.classList.toggle('clicked');
+  } else {
+    operator = e.target.textContent;
+  }
+  if(e.key === "Enter"){
+    return;
+  }
+
+  if (lastOp !== null) {
+    operate(Number(ans), Number(currVal), lastOp);
+    lastOp = operator;
+    inputField.textContent = `${ans} ${lastOp}`;
+    outputField.textContent = '';
+    currVal = '';
+    return;
+  }
+
+  lastOp = operator;
+  ans = Number(currVal);
+  currVal = '';
+  inputField.textContent = `${ans} ${operator}`;
+  outputField.textContent = `${ans}`;
+}
+
 function linkEqualButton() {
   const equalButton = document.querySelector('.equal');
-  equalButton.addEventListener('click', e => {
-    if (ans === null || currVal === '') return;
-    inputField.textContent = `${ans} ${lastOp} ${currVal}`;
-    operate(Number(ans), Number(currVal), lastOp);
-    currVal = String(ans);
-    ans = null;
-    lastOp = null;
-    equalCondition = true;
-  })
+  equalButton.addEventListener('click', doEqual)
+}
+
+function doEqual() {
+  if (ans === null || currVal === '') return;
+  inputField.textContent = `${ans} ${lastOp} ${currVal}`;
+  operate(Number(ans), Number(currVal), lastOp);
+  currVal = String(ans);
+  ans = null;
+  lastOp = null;
+  equalCondition = true;
 }
 
 function updateDisplayOutput(num) {
@@ -240,9 +268,22 @@ function restoreArrow(e) {
   arrowButton.classList.remove('moving-arrow');
 }
 
+function keyPress(e) {
+  if (e.key >= 0 && e.key <= 9) {
+    doDigit(null, e.key);
+  } else if (opList.indexOf(e.key) != -1) {
+    doOperator(null, e.key);
+  } else if (e.key === '=' || e.key === 'Enter') {
+    doEqual();
+  } else if (e.key === "Backspace") {
+    deleteFromExpression();
+  }
+}
+
 // INITIALIZERS
 window.addEventListener('DOMContentLoaded', generateButtonsOperators);
 window.addEventListener('DOMContentLoaded', setAnimations);
+window.addEventListener('keydown', keyPress);
 deleteButton.addEventListener('click', deleteFromExpression);
 clearButton.addEventListener('click', clearCalculator);
 showAbout.addEventListener('click', showAboutDiv);

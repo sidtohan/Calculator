@@ -177,7 +177,7 @@ function clearCalculator(e) {
 function linkDecimalButton(e) {
   const decimalButton = document.querySelector('.decimal');
   decimalButton.addEventListener('click', e => {
-    if (ifDecimal) {
+    if (ifDecimal || equalCondition) {
       return;
     }
     currVal += e.target.textContent;

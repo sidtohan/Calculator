@@ -95,7 +95,7 @@
 }
 
 .about{
-  transition: 0.25s ease-in;
+  transition: 0.1s ease-in;
   box-sizing: border-box;
   display: flex;
   align-self: flex-start;
@@ -119,12 +119,20 @@
   border: none;
 }
 
-.show-about svg{
+.show-about > svg{
   transition: 0.1s ease-in;
 }
 
-.show-about svg:hover{
+.moving-arrow{
   transform: translateX(-10px);
+}
+
+.clicked-arrow{
+  transform: rotate(180deg);
+}
+
+.clicked-arrow.moving-arrow{
+  transform: rotate(180deg) translateX(-10px);
 }
 
 body{

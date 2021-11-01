@@ -6,6 +6,7 @@ const outputField = document.querySelector('.display > .output');
 const deleteButton = document.querySelector('.delete');
 const clearButton = document.querySelector('.clear');
 const showAbout = document.querySelector('.show-about')
+const arrowButton = document.querySelector('.show-about > svg');
 const about = document.querySelector('.about')
 const opList = '+-*/';
 
@@ -15,6 +16,7 @@ let ans = null;
 let lastOp = null;
 let equalCondition = false;
 let ifDecimal = false;
+let divShowing = false;
 
 
 // FUNCTIONS
@@ -190,7 +192,17 @@ function linkDecimalButton(e) {
 }
 
 function showAboutDiv(e) {
-  about.classList.toggle("hidden");
+  if (divShowing === false) {
+    arrowButton.classList.add('clicked-arrow');
+    about.classList.toggle("hidden");
+    divShowing = true;
+  } else {
+    divShowing = false;
+    arrowButton.classList.remove('moving-arrow');
+    arrowButton.classList.remove('clicked-arrow');
+    about.classList.toggle("hidden");
+  }
+
 }
 
 function addRequiredListeners(button) {
@@ -204,6 +216,7 @@ function addRequiredListeners(button) {
     e.target.classList.remove('clicked');
   })
 }
+
 function setAnimations() {
   const operatorButtons = [...opButtons.children];
   for (let i = 0; i < operatorButtons.length; i++) {
@@ -212,9 +225,20 @@ function setAnimations() {
   addRequiredListeners(clearButton);
   addRequiredListeners(deleteButton);
 }
+
+function moveArrow(e) {
+  arrowButton.classList.add('moving-arrow');
+}
+
+function restoreArrow(e) {
+  arrowButton.classList.remove('moving-arrow');
+}
+
 // INITIALIZERS
 window.addEventListener('DOMContentLoaded', generateButtonsOperators);
 window.addEventListener('DOMContentLoaded', setAnimations);
 deleteButton.addEventListener('click', deleteFromExpression);
 clearButton.addEventListener('click', clearCalculator);
 showAbout.addEventListener('click', showAboutDiv);
+showAbout.addEventListener('mouseenter', moveArrow);
+showAbout.addEventListener('mouseleave', restoreArrow);

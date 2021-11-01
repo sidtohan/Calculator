@@ -3,6 +3,7 @@ const buttonGroup = document.querySelector('.buttons')
 const opButtons = document.querySelector('.operators-numbers')
 const inputField = document.querySelector('.display > .input')
 const outputField = document.querySelector('.display > .output');
+const deleteButton = document.querySelector('.delete');
 const opList = '+-*/';
 
 // GLOBAL VARIABLES
@@ -61,7 +62,7 @@ function linkButtonsDigits() {
     let tempList = [...button.classList]
     if (tempList.indexOf('digit') != -1) {
       button.addEventListener('click', (e) => {
-        if(equalCondition){
+        if (equalCondition) {
           currVal = '';
           inputField.textContent = '\n';
           equalCondition = false;
@@ -80,19 +81,30 @@ function linkButtonsOperators() {
     let tempList = [...button.classList]
     if (tempList.indexOf('operator') != -1) {
       button.addEventListener('click', (e) => {
-        if(currVal === '' && ans === null) 
+        if (currVal === '' && ans === null)
           return;
+
         equalCondition = false;
-        lastOp = e.target.textContent;
-        if(currVal === ''){
+        if (currVal === '') {
           inputField.textContent = `${ans} ${e.target.textContent}`;
+          lastOp = e.target.textContent;
           return;
         }
+        
+        if(lastOp !== null){
+          operate(Number(ans), Number(currVal), lastOp);
+          lastOp = e.target.textContent;
+          inputField.textContent = `${ans} ${lastOp}`;
+          outputField.textContent = '';
+          currVal = '';
+          return;
+        }
+
+        lastOp = e.target.textContent;
         ans = Number(currVal);
         currVal = '';
         inputField.textContent = `${ans} ${e.target.textContent}`;
         outputField.textContent = `${ans}`;
-        
       })
     }
   }
@@ -129,12 +141,24 @@ function operate(a, b, op) {
     default:
       ans = a / b;
   }
-  if(ans === Infinity){
+  if (ans === Infinity) {
     alert("Zero Division Error");
     return;
   }
   updateDisplayOutput(ans);
 }
 
+function deleteFromExpression(e) {
+  if (currVal === "") {
+    if (lastOp !== null) {
+      lastOp = null;
+      currVal = String(ans);
+      ans = null;
+      inputField.textContent = currVal;
+    }
+  }
+}
+
 // INITIALIZERS
 window.addEventListener('DOMContentLoaded', generateButtonsOperators);
+deleteButton.addEventListener('click', deleteFromExpression);

@@ -5,6 +5,8 @@ const inputField = document.querySelector('.display > .input')
 const outputField = document.querySelector('.display > .output');
 const deleteButton = document.querySelector('.delete');
 const clearButton = document.querySelector('.clear');
+const showAbout = document.querySelector('.show-about')
+const about = document.querySelector('.about')
 const opList = '+-*/';
 
 // GLOBAL VARIABLES
@@ -187,7 +189,12 @@ function linkDecimalButton(e) {
   })
 }
 
+function showAboutDiv(e){
+  about.classList.toggle("hidden");
+}
+
 // INITIALIZERS
 window.addEventListener('DOMContentLoaded', generateButtonsOperators);
 deleteButton.addEventListener('click', deleteFromExpression);
 clearButton.addEventListener('click', clearCalculator);
+showAbout.addEventListener('click', showAboutDiv)

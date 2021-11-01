@@ -159,7 +159,7 @@ function deleteFromExpression(e) {
     equalCondition = false;
     return;
   }
-  if(currVal[currVal.length - 1] === '.'){
+  if (currVal[currVal.length - 1] === '.') {
     ifDecimal = false;
   }
   currVal = currVal.slice(0, currVal.length - 1);
@@ -189,12 +189,32 @@ function linkDecimalButton(e) {
   })
 }
 
-function showAboutDiv(e){
+function showAboutDiv(e) {
   about.classList.toggle("hidden");
 }
 
+function addRequiredListeners(button) {
+  button.addEventListener('click', (e) => {
+    e.target.classList.add('clicked');
+  })
+  button.addEventListener('transitionend', (e) => {
+    if (e.propertyName !== "transform") {
+      return;
+    }
+    e.target.classList.remove('clicked');
+  })
+}
+function setAnimations() {
+  const operatorButtons = [...opButtons.children];
+  for (let i = 0; i < operatorButtons.length; i++) {
+    addRequiredListeners(operatorButtons[i]);
+  }
+  addRequiredListeners(clearButton);
+  addRequiredListeners(deleteButton);
+}
 // INITIALIZERS
 window.addEventListener('DOMContentLoaded', generateButtonsOperators);
+window.addEventListener('DOMContentLoaded', setAnimations);
 deleteButton.addEventListener('click', deleteFromExpression);
 clearButton.addEventListener('click', clearCalculator);
-showAbout.addEventListener('click', showAboutDiv)
+showAbout.addEventListener('click', showAboutDiv);

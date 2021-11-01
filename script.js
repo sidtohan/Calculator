@@ -12,6 +12,8 @@ let currVal = '';
 let ans = null;
 let lastOp = null;
 let equalCondition = false;
+let ifDecimal = false;
+
 
 // FUNCTIONS
 // generates the required buttons
@@ -53,6 +55,7 @@ function generateButtonsOperators() {
   linkButtonsDigits();
   linkButtonsOperators();
   linkEqualButton();
+  linkDecimalButton();
   return;
 }
 
@@ -154,11 +157,37 @@ function deleteFromExpression(e) {
     equalCondition = false;
     return;
   }
+  if(currVal[currVal.length - 1] === '.'){
+    ifDecimal = false;
+  }
   currVal = currVal.slice(0, currVal.length - 1);
   outputField.textContent = outputField.textContent.slice(0, outputField.textContent.length - 1);
   equalCondition = false;
 }
 
+function clearCalculator(e) {
+  inputField.textContent = '';
+  outputField.textContent = '';
+  lastOp = null;
+  currVal = '';
+  ans = null;
+  equalCondition = false;
+}
+
+function linkDecimalButton(e) {
+  const decimalButton = document.querySelector('.decimal');
+  decimalButton.addEventListener('click', e => {
+    if (ifDecimal) {
+      return;
+    }
+    currVal += e.target.textContent;
+    outputField.textContent = currVal;
+    ifDecimal = true;
+    return;
+  })
+}
+
 // INITIALIZERS
 window.addEventListener('DOMContentLoaded', generateButtonsOperators);
 deleteButton.addEventListener('click', deleteFromExpression);
+clearButton.addEventListener('click', clearCalculator);

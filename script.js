@@ -8,6 +8,8 @@ const clearButton = document.querySelector('.clear');
 const showAbout = document.querySelector('.show-about')
 const arrowButton = document.querySelector('.show-about > svg');
 const about = document.querySelector('.about')
+const info = document.querySelector('.about > .info');
+const footerLinks = document.querySelector('.about > .links-copyright');
 const opList = '+-*/';
 
 // GLOBAL VARIABLES
@@ -193,10 +195,14 @@ function linkDecimalButton(e) {
 
 function showAboutDiv(e) {
   if (divShowing === false) {
+    footerLinks.classList.toggle('slide-in');
+    info.classList.toggle('slide-in')
     arrowButton.classList.add('clicked-arrow');
     about.classList.toggle("hidden");
     divShowing = true;
   } else {
+    footerLinks.classList.toggle('slide-in');
+    info.classList.toggle('slide-in');
     divShowing = false;
     arrowButton.classList.remove('moving-arrow');
     arrowButton.classList.remove('clicked-arrow');

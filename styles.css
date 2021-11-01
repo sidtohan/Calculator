@@ -114,6 +114,36 @@
   padding: 0;
 }
 
+
+.info {
+  transition: 0.3s ease-out;
+  transform: translateY(-100%);
+}
+
+.info.slide-in{
+  transform: none;
+}
+
+.links-copyright{
+  transition: 0.3s ease-out;
+  transform: translateY(100%);
+  display: flex;
+  align-items: center;
+}
+
+.links-copyright.slide-in{
+  transform: none;
+}
+.left-chevron{
+  height: auto;
+  width: 3.5vh;
+}
+
+.right-chevron{
+  height: auto;
+  width: 3.5vh;
+}
+
 .show-about{
   background-color: transparent;
   color: #fff;
@@ -135,6 +165,7 @@
 .clicked-arrow.moving-arrow{
   transform: rotate(180deg) translateX(-10px);
 }
+
 
 body{
   display: flex;

@@ -17,7 +17,6 @@ let currVal = '';
 let ans = null;
 let lastOp = null;
 let equalCondition = false;
-let ifDecimal = false;
 let divShowing = false;
 
 // FUNCTIONS
@@ -29,11 +28,11 @@ function generateButtonsOperators() {
       let newButton = document.createElement('button');
       if (j === 3) {
         newButton.classList.add('operator');
-        newButton.setAttribute('type',"button");
+        newButton.setAttribute('type', "button");
         newButton.classList.add(opList[Math.floor(k / 3) - 1]);
         newButton.textContent = opList[Math.floor(k / 3) - 1];
       } else {
-        newButton.setAttribute('type',"button");
+        newButton.setAttribute('type', "button");
         newButton.classList.add('digit');
         newButton.classList.add(k);
         newButton.textContent = (k++);
@@ -59,6 +58,7 @@ function generateButtonsOperators() {
 
   let division = document.createElement('button');
   division.classList.add('operator');
+  division.classList.add('/');
   division.textContent = '/';
   opButtons.appendChild(division);
 
@@ -107,17 +107,10 @@ function linkButtonsOperators() {
 }
 
 function doOperator(e, operatorPassed) {
-  console.log(e);
-  console.log(operatorPassed);
   if (currVal === '' && ans === null)
     return;
 
   equalCondition = false;
-  if (currVal === '') {
-    inputField.textContent = `${ans} ${e.target.textContent}`;
-    lastOp = e.target.textContent;
-    return;
-  }
   let operator;
   if (e === null) {
     operator = operatorPassed;
@@ -126,7 +119,10 @@ function doOperator(e, operatorPassed) {
   } else {
     operator = e.target.textContent;
   }
-  if(e.key === "Enter"){
+
+  if (currVal === '') {
+    inputField.textContent = `${ans} ${operator}`;
+    lastOp = operator;
     return;
   }
 
@@ -191,6 +187,9 @@ function deleteFromExpression(e) {
     equalCondition = false;
     return;
   }
+  if (e === null) {
+    deleteButton.classList.toggle('clicked');
+  }
   if (currVal[currVal.length - 1] === '.') {
     ifDecimal = false;
   }
@@ -210,15 +209,23 @@ function clearCalculator(e) {
 
 function linkDecimalButton(e) {
   const decimalButton = document.querySelector('.decimal');
-  decimalButton.addEventListener('click', e => {
-    if (ifDecimal || equalCondition) {
-      return;
-    }
-    currVal += e.target.textContent;
-    outputField.textContent = currVal;
-    ifDecimal = true;
+  decimalButton.addEventListener('click', doDecimal);
+}
+
+function doDecimal(e) {
+  if(e === null){
+    const decimalButton = document.querySelector('.decimal');
+    decimalButton.classList.toggle('clicked');
+  }
+  
+  if (currVal.indexOf('.') != -1) {
     return;
-  })
+  }
+  
+  currVal += '.';
+  equalCondition = false;
+  outputField.textContent = currVal;
+  return;
 }
 
 function showAboutDiv(e) {
@@ -274,9 +281,14 @@ function keyPress(e) {
   } else if (opList.indexOf(e.key) != -1) {
     doOperator(null, e.key);
   } else if (e.key === '=' || e.key === 'Enter') {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
     doEqual();
   } else if (e.key === "Backspace") {
-    deleteFromExpression();
+    deleteFromExpression(null);
+  } else if (e.key === '.') {
+    doDecimal(null);
   }
 }
 

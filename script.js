@@ -4,6 +4,7 @@ const opButtons = document.querySelector('.operators-numbers')
 const inputField = document.querySelector('.display > .input')
 const outputField = document.querySelector('.display > .output');
 const deleteButton = document.querySelector('.delete');
+const clearButton = document.querySelector('.clear');
 const opList = '+-*/';
 
 // GLOBAL VARIABLES
@@ -90,8 +91,8 @@ function linkButtonsOperators() {
           lastOp = e.target.textContent;
           return;
         }
-        
-        if(lastOp !== null){
+
+        if (lastOp !== null) {
           operate(Number(ans), Number(currVal), lastOp);
           lastOp = e.target.textContent;
           inputField.textContent = `${ans} ${lastOp}`;
@@ -116,7 +117,7 @@ function linkEqualButton() {
     if (ans === null || currVal === '') return;
     inputField.textContent = `${ans} ${lastOp} ${currVal}`;
     operate(Number(ans), Number(currVal), lastOp);
-    currVal = ans;
+    currVal = String(ans);
     ans = null;
     lastOp = null;
     equalCondition = true;
@@ -150,13 +151,12 @@ function operate(a, b, op) {
 
 function deleteFromExpression(e) {
   if (currVal === "") {
-    if (lastOp !== null) {
-      lastOp = null;
-      currVal = String(ans);
-      ans = null;
-      inputField.textContent = currVal;
-    }
+    equalCondition = false;
+    return;
   }
+  currVal = currVal.slice(0, currVal.length - 1);
+  outputField.textContent = outputField.textContent.slice(0, outputField.textContent.length - 1);
+  equalCondition = false;
 }
 
 // INITIALIZERS

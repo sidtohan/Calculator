@@ -253,15 +253,6 @@ body, html{
   }
 
 
-  .info {
-    transition: 0.3s ease-out;
-    transform: translateY(+100%);
-  }
-
-  .info.slide-in{
-    transform: none;
-  }
-
   .links-copyright{
     transition: 0.3s ease-out;
     transform: translateY(100%);
@@ -269,13 +260,9 @@ body, html{
     align-items: center;
   }
   
-  .links-copyright.slide-in{
-    transform: none;
-  }
-
   .about{
     padding: 1vh;
-    font-size: 2vh;
+    font-size: 3vh;
   }
 
   .about.hidden{

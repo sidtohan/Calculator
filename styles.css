@@ -13,10 +13,13 @@
 }
 
 .input, .output{
-  text-overflow: ellipsis;
-  color: #fff;
   height: 50%;
+  color: #fff;
   font-size: 4vh;
+}
+
+.input{
+  overflow: hidden;
 }
 
 .display{
@@ -29,7 +32,7 @@
   align-items: flex-end;
 }
 
-.decimal, .digit, .operator, .clear, .delete, .equal, .decimal{
+.decimal, .digit, .operator, .clear, .delete, .equal{
   transition: 0.08s ease-out;
   padding: 15px;
   border: solid black 1px;
@@ -51,8 +54,8 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  gap: 5px;
-  padding: 5px 0;
+  gap: 1vh;
+  padding: 1vh 0;
 }
 
 .clear, .delete{
@@ -70,10 +73,12 @@
 }
 
 .main-calculator-body{
+  transition: 0.2s ease-in;
   box-sizing: border-box;
   background-color: black;
   gap: 1vh;
   min-width: 60vh !important;
+  max-width: 60vh !important;
   padding: 3vh;
   display: flex;
   flex-direction: column;
@@ -146,8 +151,6 @@
   transform: none;
 }
 
-
-
 .show-about{
   background-color: transparent;
   color: #fff;
@@ -186,4 +189,91 @@ body,html{
   background: #ad5389; 
   background: -webkit-linear-gradient(to right, #3c1053, #ad5389);  
   background: linear-gradient(to right, #3c1053, #ad5389);
+}
+
+@media only screen and (max-width: 1060px){
+  body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    z-index: -1
+  }
+
+  .clear-delete{
+    gap: 1vh;
+    padding: 1vh 0;
+  }
+
+
+  .decimal, .digit, .operator, .clear, .delete, .equal{
+    font-size: 2vh !important;
+    width: 100%;
+  }
+
+  .input, .output{
+    font-size: 2vh !important;
+    overflow: hidden;
+    margin: 1vh;
+  }
+
+  .main-calculator-body{
+    min-width: 30vh !important;
+    max-width: 30vh !important;
+    text-overflow: ellipsis;
+    padding: 1vh; 
+  }
+
+  .show-about{
+    background-color: transparent;
+    color: #fff;
+    border: none;
+  }
+
+  .show-about > svg{
+    transition: 0.1s ease-in;
+    transform: rotate(90deg);
+  }
+
+  .moving-arrow{
+    transform: rotate(90deg) translateX(-10px) !important; 
+  }
+
+  .clicked-arrow{
+    transform: rotate(270deg) !important;
+  }
+
+  .clicked-arrow.moving-arrow{
+    transform: rotate(270deg) translateX(-10px) !important;
+  }
+
+
+  .info {
+    transition: 0.3s ease-out;
+    transform: translateY(+100%);
+  }
+
+  .info.slide-in{
+    transform: none;
+  }
+
+  .links-copyright{
+    transition: 0.3s ease-out;
+    transform: translateY(100%);
+    display: flex;
+    align-items: center;
+  }
+  
+  .links-copyright.slide-in{
+    transform: none;
+  }
+
+  .about{
+    padding: 1vh;
+    font-size: 2vh;
+  }
+
+  .about.hidden{
+    height: 0 !important;
+    width: 0;
+  }
 }

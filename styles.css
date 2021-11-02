@@ -13,10 +13,11 @@
 }
 
 .input, .output{
+  flex-grow: 1;
   height: 50%;
   color: #fff;
   font-size: 4vh;
-  width: inherit;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -25,7 +26,7 @@
 .display{
   display: flex;
   box-sizing: border-box;
-  width: 100%;
+  width: 95%;
   height: 15vh;
   padding: 1vh;
   flex-direction: column;
@@ -224,7 +225,7 @@ body, html{
     height: 50%;
     font-size: 4vh !important;
     margin: 1vh;
-    width: 80%;
+    width: 95%;
     white-space: nowrap;
     overflow: hidden;
   }

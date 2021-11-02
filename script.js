@@ -237,6 +237,7 @@ function showAboutDiv(e) {
     arrowButton.classList.add('clicked-arrow');
     about.classList.toggle("hidden");
     divShowing = true;
+    about.scrollIntoView();
   } else {
     footerLinks.classList.toggle('slide-in');
     info.classList.toggle('slide-in');

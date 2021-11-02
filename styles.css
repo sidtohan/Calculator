@@ -218,7 +218,6 @@ body,html{
 
   .main-calculator-body{
     min-width: 30vh !important;
-    max-width: 30vh !important;
     text-overflow: ellipsis;
     padding: 1vh; 
   }

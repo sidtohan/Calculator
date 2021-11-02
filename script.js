@@ -92,11 +92,8 @@ function doDigit(e, key) {
     equalCondition = false;
   }
   currVal += digit;
-  if(currVal.length >= 21){
-    outputField.textContent = `${currVal[0]}.${currVal.slice(1, 5)}e+${currVal.length - 1}`;
-  } else {
-    outputField.textContent = currVal;
-  }
+  outputField.textContent = currVal;
+  
 }
 
 function linkButtonsOperators() {
@@ -142,15 +139,9 @@ function doOperator(e, operatorPassed) {
   lastOp = operator;
   ans = Number(currVal);
 
-  let temp;
-  if(currVal >= 21){
-    temp = `${currVal[0]}.${currVal.slice(1,4)}..e+${currVal.length-2}`;
-  } else{
-    temp = Number(currVal);
-  }
   currVal = '';
-  inputField.textContent = `${temp} ${operator}`;
-  outputField.textContent = `${temp}`;
+  inputField.textContent = `${ans} ${operator}`;
+  outputField.textContent = `${ans}`;
 }
 
 function linkEqualButton() {

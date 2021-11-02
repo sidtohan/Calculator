@@ -16,18 +16,18 @@
   height: 50%;
   color: #fff;
   font-size: 4vh;
-}
-
-.input{
+  width: inherit;
+  white-space: nowrap;
   overflow: hidden;
 }
+
 
 .display{
   display: flex;
   box-sizing: border-box;
-  width: inherit;
+  width: 100%;
+  height: 15vh;
   padding: 1vh;
-  height: 10vh;
   flex-direction: column;
   align-items: flex-end;
 }
@@ -63,6 +63,7 @@
 }
 
 .main-calculator{
+  flex-grow: 1;
   padding: 30px 0;
   box-sizing: border-box;
   display: flex;
@@ -77,12 +78,11 @@
   box-sizing: border-box;
   background-color: black;
   gap: 1vh;
-  min-width: 60vh !important;
-  max-width: 60vh !important;
+  width: 60vh;
   padding: 3vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   border-radius: 15px;
   min-width: 256px;
 }
@@ -106,9 +106,8 @@
 }
 
 .about{
-  transition: 0.1s ease-in;
   box-sizing: border-box;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   justify-content: space-between;
   align-self: flex-start;
@@ -116,18 +115,19 @@
   background: #D31027;  
   background: -webkit-linear-gradient(to right, #EA384D, #D31027);  
   background: linear-gradient(to right, #EA384D, #D31027);    
-  width: 100%;
   padding-left: 15px;
   padding-bottom: 15px;
   font-weight: 30;
   font-size: 3.5vh;
   height: 100%;
+  width: 100%;
 }
 
 .about.hidden{
-  visibility: hidden;
+  transition: 0.3s ease-in;
+  height: 0;
   width: 0;
-  padding: 0;
+  display: none;
 }
 
 
@@ -176,11 +176,11 @@
 
 body{
   display: flex;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 
-body,html{
+body, html{
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif, Verdana, Geneva, Tahoma;
   width: 100%;
@@ -193,10 +193,10 @@ body,html{
 
 @media only screen and (max-width: 1060px){
   body{
+    height: 80%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    z-index: -1
   }
 
   .clear-delete{
@@ -206,20 +206,27 @@ body,html{
 
 
   .decimal, .digit, .operator, .clear, .delete, .equal{
-    font-size: 2vh !important;
+    font-size: 4vh !important;
+    width: 100%;
+  }
+
+  .display{
     width: 100%;
   }
 
   .input, .output{
-    font-size: 2vh !important;
-    overflow: hidden;
+    height: 50%;
+    font-size: 4vh !important;
     margin: 1vh;
+    width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
+
   .main-calculator-body{
-    min-width: 30vh !important;
-    text-overflow: ellipsis;
-    padding: 1vh; 
+    width: 40vh;
+    padding: 2vh; 
   }
 
   .show-about{

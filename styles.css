@@ -93,7 +93,7 @@
   align-items: center;
   text-align: center;
   font-weight: bolder;
-  font-size: 4vh;
+  font-size: 4vmax;
   width: 100%;
   padding: 0;
   margin: 0;
@@ -124,7 +124,7 @@
   padding-left: 15px;
   padding-bottom: 15px;
   font-weight: 30;
-  font-size: 3.5vh;
+  font-size: 4vh;
   height: 100%;
   width: 100%;
 }
